@@ -19,10 +19,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::prefix("v1")->namespace("Api")->group(function(){
-    Route::resource('city', 'CityController');
-    Route::resource('country', 'CountryController');
 
+    Route::post('login', "Auth\LoginJwtController@login")->name("login");
     Route::name("users.")->group(function() {
         Route::resource('users', "UserController");
+    });
+
+    Route::group(['middleware' => ["jwt.auth"]], function () {
+        Route::resource('city', 'CityController');
+        Route::resource('country', 'CountryController');
     });
 });
