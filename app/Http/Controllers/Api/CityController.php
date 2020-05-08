@@ -11,6 +11,7 @@ use App\Http\Resources\CityResource;
 use App\Repository\CityRepository;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class CityController extends Controller
 {
@@ -96,7 +97,21 @@ class CityController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+
+            $cityRepository = new CityRepository($this->city);
+
+            if($cityRepository->validationUpdate($request, $id)) {
+                $city = $this->city->findOrFail($id);
+                $city->update($request->all());
+            }
+
+            $message = new ApiMessages("City sucessfully updated");
+            return response()->json($message->getMessage(), 401);
+        } catch (QueryException $e) {
+            $message = new ApiMessages($e->getMessage());
+            return response()->json($message->getMessage(), 401);
+        }
     }
 
     /**
@@ -107,6 +122,15 @@ class CityController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $city = $this->city->findOrFail($id);
+            $city->delete();
+
+            $message = new ApiMessages("City sucessfully removed");
+            return response()->json($message->getMessage(), 401);
+        } catch (QueryException $e) {
+            $message = new ApiMessages($e->getMessage());
+            return response()->json($message->getMessage(), 401);
+        }
     }
 }
