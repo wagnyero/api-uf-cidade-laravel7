@@ -31,10 +31,12 @@ Desenvolvimento de uma API REST para cadastrar UFs e cidades. Foi utilizado as s
 
 - **ENDPOINT - Users**
 
-- Listagem de todos os usuários 
+- Listagem de todos os usuários  
+
 **GET**  http://seuservidor/api/v1/users
 
-- Listagem de um usuário específico
+- Listagem de um usuário específico  
+
 **GET**  http://seuservidor/api/v1/users/#ID
 
 - Novo Usuário
@@ -114,6 +116,7 @@ name = nome da cidade
 country_id = id do estado que deseja associar
 
 - Excluir Cidade
-**DELETE**  http://seuservidor/api/v1/country/#ID
+**DELETE**  http://seuservidor/api/v1/country/#ID  
+
 **CAMPOS**
 #ID = Id da cidade que deseja-se excluir
