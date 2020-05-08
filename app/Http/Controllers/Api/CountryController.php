@@ -7,6 +7,7 @@ use App\Country;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CountryRequest;
 use App\Http\Resources\CountryCollection;
+use App\Http\Resources\CountryResource;
 use App\Repository\CountryRepository;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -58,7 +59,7 @@ class CountryController extends Controller
         try {
             $this->country->create($request->all());
 
-            $message = new ApiMessages("Country created sucessfully");
+            $message = new ApiMessages("Country sucessfully created");
 
             return response()->json($message->getMessage());
         } catch (QueryException $e) {
@@ -75,7 +76,14 @@ class CountryController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $country = $this->country->find($id);
+
+            return new CountryResource($country);
+        } catch (QueryException $e) {
+            $message = new ApiMessages($e->getMessage());
+            return response()->json($message->getMessage(), 401);
+        }
     }
 
     /**
@@ -85,9 +93,18 @@ class CountryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CountryRequest $request, $id)
     {
-        //
+        try {
+            $country = $this->country->findOrFail($id);
+            $country->update($request->all());
+
+            $message = new ApiMessages("Country sucessfully updated");
+            return response()->json($message->getMessage(), 401);
+        } catch (QueryException $e) {
+            $message = new ApiMessages($e->getMessage());
+            return response()->json($message->getMessage(), 401);
+        }
     }
 
     /**
@@ -98,6 +115,15 @@ class CountryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $country = $this->country->findOrFail($id);
+            $country->delete();
+
+            $message = new ApiMessages("Country sucessfully removed");
+            return response()->json($message->getMessage(), 401);
+        } catch (QueryException $e) {
+            $message = new ApiMessages($e->getMessage());
+            return response()->json($message->getMessage(), 401);
+        }
     }
 }
