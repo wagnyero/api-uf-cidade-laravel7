@@ -32,33 +32,31 @@ Desenvolvimento de uma API REST para cadastrar UFs e cidades. Foi utilizado as s
 - **ENDPOINT - Users**
 
 - Listagem de todos os usuários  
-
 **GET**  http://seuservidor/api/v1/users
 
 - Listagem de um usuário específico  
-
 **GET**  http://seuservidor/api/v1/users/#ID
 
-- Novo Usuário
-**POST**  http://seuservidor/api/v1/users 
-**CAMPOS**
-name = nome do usuário
-email = email do usuário
-password = senha do usuário
-password_confirmation = confirmação da senha
+- Novo Usuário  
+**POST**  http://seuservidor/api/v1/users   
+**CAMPOS**  
+name = nome do usuário  
+email = email do usuário  
+password = senha do usuário  
+password_confirmation = confirmação da senha  
 
 - Alterar Usuário
-**PUT**  http://seuservidor/api/v1/users 
-**CAMPOS**
-name = nome do usuário
-email = email do usuário
-password = senha do usuário
-password_confirmation = confirmação da senha
+**PUT**  http://seuservidor/api/v1/users  
+**CAMPOS**  
+name = nome do usuário  
+email = email do usuário  
+password = senha do usuário  
+password_confirmation = confirmação da senha  
 
 - Excluir Usuário
-**DELETE**  http://seuservidor/api/v1/users/#ID_USUARIO
-**CAMPOS**
-#ID_USUARIO = Id do usuário que deseja-se excluir
+**DELETE**  http://seuservidor/api/v1/users/#ID_USUARIO  
+**CAMPOS**  
+#ID_USUARIO = Id do usuário que deseja-se excluir  
 
 - **ENDPOINT - Login**
 - Gerar token de acesso a API
