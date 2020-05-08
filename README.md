@@ -59,62 +59,62 @@ password_confirmation = confirmação da senha
 #ID_USUARIO = Id do usuário que deseja-se excluir  
 
 - **ENDPOINT - Login**
-- Gerar token de acesso a API
-**POST**  http://seuservidor/api/v1/login
-**CAMPOS**
-email = email do usuário
-password = senha do usuário
+- Gerar token de acesso a API  
+**POST**  http://seuservidor/api/v1/login  
+**CAMPOS**  
+email = email do usuário  
+password = senha do usuário  
 
 **Para utilizar qualquer endpoint é necessário informar o token de acesso no cabeçalho da requisição acrescido da palavra**
 **Bearer #token_a_ser_utilizado**
 
 - **ENDPOINT - Country**
-- Listagem de todos os Estados
-**GET**  http://seuservidor/api/v1/country
+- Listagem de todos os Estados  
+**GET**  http://seuservidor/api/v1/country  
 
 - Listagem de um estado específico
-**GET**  http://seuservidor/api/v1/country/#ID
-**CAMPOS**
-#ID = Id do Estado que deseja-se excluir
+**GET**  http://seuservidor/api/v1/country/#ID  
+**CAMPOS**  
+#ID = Id do Estado que deseja-se excluir  
 
 - Novo Estado
-**POST**  http://seuservidor/api/v1/country 
-**CAMPOS**
-name = nome do estado
+**POST**  http://seuservidor/api/v1/country  
+**CAMPOS**  
+name = nome do estado  
 
 - Alterar Estado
-**PUT**  http://seuservidor/api/v1/country
-**CAMPOS**
-name = nome do usuário
+**PUT**  http://seuservidor/api/v1/country  
+**CAMPOS**  
+name = nome do usuário  
 
-- Excluir Estado
-**DELETE**  http://seuservidor/api/v1/country/#ID
-**CAMPOS**
-#ID = Id do Estado que deseja-se excluir
+- Excluir Estado  
+**DELETE**  http://seuservidor/api/v1/country/#ID  
+**CAMPOS**  
+#ID = Id do Estado que deseja-se excluir  
 
 - **ENDPOINT - City**
 - Listagem de todos as cidades
-**GET**  http://seuservidor/api/v1/city
+**GET**  http://seuservidor/api/v1/city  
 
 - Listagem de uma cidade específica
-**GET**  http://seuservidor/api/v1/city/#ID
-**CAMPOS**
-#ID = Id da cidade que deseja-se excluir
+**GET**  http://seuservidor/api/v1/city/#ID  
+**CAMPOS**  
+#ID = Id da cidade que deseja-se excluir  
 
 - Nova Cidade
-**POST**  http://seuservidor/api/v1/city
-**CAMPOS**
-name = nome da cidade
-country_id = id do estado que deseja associar
+**POST**  http://seuservidor/api/v1/city  
+**CAMPOS**  
+name = nome da cidade  
+country_id = id do estado que deseja associar  
 
 - Alterar Cidade
-**PUT**  http://seuservidor/api/v1/city
-**CAMPOS**
-name = nome da cidade
-country_id = id do estado que deseja associar
+**PUT**  http://seuservidor/api/v1/city  
+**CAMPOS**  
+name = nome da cidade  
+country_id = id do estado que deseja associar  
 
 - Excluir Cidade
 **DELETE**  http://seuservidor/api/v1/country/#ID  
 
-**CAMPOS**
-#ID = Id da cidade que deseja-se excluir
+**CAMPOS**  
+#ID = Id da cidade que deseja-se excluir  
