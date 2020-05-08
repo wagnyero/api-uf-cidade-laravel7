@@ -107,7 +107,7 @@ class CityController extends Controller
             }
 
             $message = new ApiMessages("City sucessfully updated");
-            return response()->json($message->getMessage(), 401);
+            return response()->json($message->getMessage());
         } catch (QueryException $e) {
             $message = new ApiMessages($e->getMessage());
             return response()->json($message->getMessage(), 401);
@@ -127,7 +127,7 @@ class CityController extends Controller
             $city->delete();
 
             $message = new ApiMessages("City sucessfully removed");
-            return response()->json($message->getMessage(), 401);
+            return response()->json($message->getMessage());
         } catch (QueryException $e) {
             $message = new ApiMessages($e->getMessage());
             return response()->json($message->getMessage(), 401);

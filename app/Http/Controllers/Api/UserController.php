@@ -3,23 +3,21 @@
 namespace App\Http\Controllers\Api;
 
 use App\Api\ApiMessages;
-use App\Country;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CountryRequest;
-use App\Http\Resources\CountryCollection;
-use App\Http\Resources\CountryResource;
-use App\Repository\CountryRepository;
+use App\Http\Requests\UserRequest;
+use App\Http\Resources\UserResource;
+use App\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
-class CountryController extends Controller
+class UserController extends Controller
 {
+    private $user;
 
-    private $country;
-
-    public function __construct(Country $country)
+    public function __construct(User $user)
     {
-        $this->country = $country;
+        $this->user = $user;
     }
 
     /**
@@ -27,25 +25,11 @@ class CountryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        try {
-            $countryRepository = new CountryRepository($this->country);
+        $users = $this->user->paginate(10);
 
-            if($request->has("coditions")) {
-                $countryRepository->selectCoditions($request->coditions);
-            }
-
-            if($request->has("fields")) {
-                $countryRepository->selectFilter($request->fields);
-            }
-
-            return new CountryCollection($countryRepository->getResult()->with("city")->paginate(10));
-
-        } catch (QueryException $e) {
-            $message = new ApiMessages($e->getMessage());
-            return response()->json($message->getMessage(), 401);
-        }
+        return response()->json($users);
     }
 
     /**
@@ -54,13 +38,15 @@ class CountryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CountryRequest $request)
+    public function store(UserRequest $request)
     {
         try {
-            $this->country->create($request->all());
+            $data = $request->all();
 
-            $message = new ApiMessages("Country sucessfully created");
+            $data["password"] = bcrypt($data["password"]);
+            $this->user->create($data);
 
+            $message = new ApiMessages("User successfully created");
             return response()->json($message->getMessage());
         } catch (QueryException $e) {
             $message = new ApiMessages($e->getMessage());
@@ -77,11 +63,9 @@ class CountryController extends Controller
     public function show($id)
     {
         try {
-            $country = $this->country
-                            ->with("city")
-                            ->findOrFail($id);
+            $user = $this->user->findOrFail($id);
 
-            return new CountryResource($country);
+            return new UserResource($user);
         } catch (QueryException $e) {
             $message = new ApiMessages($e->getMessage());
             return response()->json($message->getMessage(), 401);
@@ -95,13 +79,16 @@ class CountryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CountryRequest $request, $id)
+    public function update(UserRequest $request, $id)
     {
         try {
-            $country = $this->country->findOrFail($id);
-            $country->update($request->all());
+            $data = $request->all();
+            $data["password"] = bcrypt($data["password"]);
 
-            $message = new ApiMessages("Country sucessfully updated");
+            $user = $this->user->findOrFail($id);
+            $user->update($data);
+
+            $message = new ApiMessages("User successfully updated");
             return response()->json($message->getMessage());
         } catch (QueryException $e) {
             $message = new ApiMessages($e->getMessage());
@@ -118,10 +105,10 @@ class CountryController extends Controller
     public function destroy($id)
     {
         try {
-            $country = $this->country->findOrFail($id);
-            $country->delete();
+            $user = $this->user->findOrFail($id);
+            $user->delete();
 
-            $message = new ApiMessages("Country sucessfully removed");
+            $message = new ApiMessages("User successfully deleted");
             return response()->json($message->getMessage());
         } catch (QueryException $e) {
             $message = new ApiMessages($e->getMessage());
