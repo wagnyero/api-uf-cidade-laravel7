@@ -79,7 +79,7 @@ class CountryController extends Controller
         try {
             $country = $this->country
                             ->with("city")
-                            ->find($id);
+                            ->findOrFail($id);
 
             return new CountryResource($country);
         } catch (QueryException $e) {

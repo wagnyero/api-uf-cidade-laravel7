@@ -6,6 +6,9 @@ use App\Api\ApiMessages;
 use App\City;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CityRequest;
+use App\Http\Resources\CityCollection;
+use App\Http\Resources\CityResource;
+use App\Repository\CityRepository;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
@@ -23,9 +26,25 @@ class CityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        try {
+            $cityRepository = new CityRepository($this->city);
+
+            if($request->has("coditions")) {
+                $cityRepository->selectCoditions($request->coditions);
+            }
+
+            if($request->has("fields")) {
+                $cityRepository->selectFilter($request->fields);
+            }
+
+            return new CityCollection($cityRepository->getResult()->with("country")->paginate(10));
+
+        } catch (QueryException $e) {
+            $message = new ApiMessages($e->getMessage());
+            return response()->json($message->getMessage(), 401);
+        }
     }
 
     /**
@@ -56,7 +75,16 @@ class CityController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $city = $this->city
+                            ->with("country")
+                            ->findOrFail($id);
+
+            return new CityResource($city);
+        } catch (QueryException $e) {
+            $message = new ApiMessages($e->getMessage());
+            return response()->json($message->getMessage(), 401);
+        }
     }
 
     /**
