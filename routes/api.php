@@ -19,5 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::prefix("v1")->namespace("Api")->group(function(){
+    Route::resource('city', 'CityController');
     Route::resource('country', 'CountryController');
 });

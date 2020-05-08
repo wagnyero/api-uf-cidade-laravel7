@@ -40,7 +40,7 @@ class CountryController extends Controller
                 $countryRepository->selectFilter($request->fields);
             }
 
-            return new CountryCollection($countryRepository->getResult()->paginate(10));
+            return new CountryCollection($countryRepository->getResult()->with("city")->paginate(10));
 
         } catch (QueryException $e) {
             $message = new ApiMessages($e->getMessage());
@@ -77,7 +77,9 @@ class CountryController extends Controller
     public function show($id)
     {
         try {
-            $country = $this->country->find($id);
+            $country = $this->country
+                            ->with("city")
+                            ->find($id);
 
             return new CountryResource($country);
         } catch (QueryException $e) {
