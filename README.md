@@ -115,6 +115,5 @@ country_id = id do estado que deseja associar
 
 - Excluir Cidade
 **DELETE**  http://seuservidor/api/v1/country/#ID  
-
 **CAMPOS**  
-#ID = Id da cidade que deseja-se excluir  
+#ID = Id da cidade que deseja-se excluir
