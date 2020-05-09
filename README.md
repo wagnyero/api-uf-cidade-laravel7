@@ -77,6 +77,18 @@ password = senha do usuário
 **CAMPOS**  
 #ID = Id do Estado que deseja-se excluir  
 
+- Busca Personalizada: trazer apenas determinados campos  
+**GET**  http://seuservidor/api/v1/country?fields=id,name  
+**CAMPOS**  
+fields = informar todos os campos que desejar separados por virgula  
+
+- Busca Personalizada: fazer busca parcial usando controladores como: =, >=, <=, like  
+**GET**  http://seuservidor/api/v1/country?coditions=name:like:r%;id:>=:10  
+**CAMPOS**  
+coditions = esse campo recebe todas as condições que desejar fazer, no exemplo acima a api irá retornar todos os estados que iniciam com "r" e que o id seja maior ou igual a 10  
+
+**OBS** É possível fazer a busca parcial informando os dois campos juntos: fields e coditions  
+
 - Novo Estado
 **POST**  http://seuservidor/api/v1/country  
 **CAMPOS**  
@@ -100,6 +112,18 @@ name = nome do usuário
 **GET**  http://seuservidor/api/v1/city/#ID  
 **CAMPOS**  
 #ID = Id da cidade que deseja-se excluir  
+
+- Busca Personalizada: trazer apenas determinados campos  
+**GET**  http://seuservidor/api/v1/city?fields=id,name  
+**CAMPOS**  
+fields = informar todos os campos que desejar separados por virgula  
+
+- Busca Personalizada: fazer busca parcial usando controladores como: =, >=, <=, like  
+**GET**  http://seuservidor/api/v1/city?coditions=name:like:%volta%  
+**CAMPOS**  
+coditions = esse campo recebe todas as condições que desejar fazer, no exemplo acima a api irá retornar todos as cidades que contenham a palavra "volta"  
+
+**OBS** É possível fazer a busca parcial informando os dois campos juntos: fields e coditions  
 
 - Nova Cidade
 **POST**  http://seuservidor/api/v1/city  
